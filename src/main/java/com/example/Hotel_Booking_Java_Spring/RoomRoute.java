@@ -6,15 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class Rooms {
+public class RoomRoute {
     
-    private final RoomRep repo;
-    public Rooms(RoomRep repo) {
-        this.repo = repo;
-    }
+    private RoomRep repo;
+    public RoomRoute(RoomRep repo) {this.repo = repo;}
 
     @GetMapping("/rooms")
-    public List<Room> getRooms() {
-        return repo.findAll();
-    }
+    public List<Room> getRooms() {return repo.findAll();}
 }

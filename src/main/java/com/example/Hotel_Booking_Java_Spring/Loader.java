@@ -13,9 +13,9 @@ public class Loader {
     CommandLineRunner loadData(RoomRep repo) {
         return args -> {
             repo.save(new Room("Single", 100));
-            repo.save(new Room("Single", 120));
-            repo.save(new Room("Double", 200));
-            repo.save(new Room("Suite", 500));
+            repo.save(new Room("Single", 110));
+            repo.save(new Room("Double", 130));
+            repo.save(new Room("Suite", 160));
         };
     }
 }
