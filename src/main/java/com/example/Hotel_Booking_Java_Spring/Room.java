@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Room {
@@ -13,16 +14,26 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     
     private int id;
+
+    @Min(value = 1, message = "Cost must be greater than 0")
+    private int cost;
+    
+    @NotBlank(message = "Room type cannot be empty")
     private String type;
-    private double price;
+
+    @Min(value = 1, message = "Capacity must be greater than 0")
     private int capacity;
+
     private boolean occupied = false;
+
+    @NotBlank(message = "Guest name cannot be empty")
+    private String guestName;
 
     public Room() {}
 
-    public Room(String type, double price) {
+    public Room(String type, int cost) {
         this.type = type;
-        this.price = price;
+        this.cost = cost;
 
         if (this.type.equals("Single")) this.capacity = 1;
         else if (this.type.equals("Double")) this.capacity = 2;
@@ -30,22 +41,16 @@ public class Room {
     }
 
     public int getId() {return id;}
-
     public String getType() {return type;}
-
-    public double getPrice() {return price;}
-
     public int getCapacity() {return capacity;}
-
+    public int getCost() {return cost;}
     public boolean isOccupied() {return occupied;}
+    public String getGuestName() {return guestName;}
 
     public void setId(int id) {this.id = id;}
-
     public void setType(String type) {this.type = type;}
-
-    public void setPrice(double price) {this.price = price;}
-
     public void setOccupation(boolean occupied) {this.occupied = occupied;}
+    public void setGuestName(String guestName) {this.guestName = guestName;}
 }
 
 interface RoomRep extends JpaRepository<Room, Long> {}

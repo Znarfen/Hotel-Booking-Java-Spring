@@ -12,10 +12,14 @@ public class Loader {
     @Bean
     CommandLineRunner loadData(RoomRep repo) {
         return args -> {
-            repo.save(new Room("Single", 100));
             repo.save(new Room("Single", 110));
-            repo.save(new Room("Double", 130));
-            repo.save(new Room("Suite", 160));
+            repo.save(new Room("Single", 115));
+            repo.save(new Room("Single", 120));
+
+            repo.save(new Room("Double", 210));
+            repo.save(new Room("Double", 215));
+
+            repo.save(new Room("Suite", 400));
         };
     }
 }
