@@ -11,27 +11,21 @@ import org.springframework.web.bind.annotation.*;
 public class BookingRoute {
 
     private final BookingRep bookingRepo;
-    private final RoomRep roomRepo;
-    private boolean booked = false;
+    private final BookingService bookingService;
 
-    public BookingRoute(BookingRep bookingRepo, RoomRep roomRepo) {
+    public BookingRoute(BookingRep bookingRepo, BookingService bookingService) {
         this.bookingRepo = bookingRepo;
-        this.roomRepo = roomRepo;
+        this.bookingService = bookingService;
     }
 
     @GetMapping
     public List<Booking> getBookings() {return bookingRepo.findAll();}
 
-    @GetMapping("/rooms")
-    public List<Room> getRooms() {return roomRepo.findAll();}
-
     @PostMapping
     public Booking createBooking(@RequestBody Booking booking, Principal principal ) throws BookingErr {
 
-        booking.setName(principal.getName());
+        bookingService.bookRoom(booking, principal.getName());
 
-        new BookingService(bookingRepo, roomRepo).BookRoom(booking);
-
-        return bookingRepo.save(booking);
+        return booking;
     }
 }

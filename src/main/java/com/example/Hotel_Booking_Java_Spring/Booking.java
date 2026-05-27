@@ -14,7 +14,7 @@ public class Booking {
 
     private int id;
 
-    @NotBlank(message = "Room type cannot be empty")
+    @Pattern(regexp = "^(Single|Double|Suite)$", message = "Room type must be either 'Single', 'Double', or 'Suite'")
     private String roomType;
 
     @Min(value = 1, message = "At least 1 guest required")

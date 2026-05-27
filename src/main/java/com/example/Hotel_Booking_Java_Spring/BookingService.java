@@ -15,9 +15,15 @@ public class BookingService {
         this.bookingRepo = bookingRepo;
         this.roomRepo = roomRepo;
     }
-    
-    public void BookRoom(Booking booking) throws BookingErr {
+
+    private List<Room> sortRoomsByCost() {
         List<Room> rooms = roomRepo.findAll();
+        rooms.sort((r1, r2) -> Integer.compare(r1.getCost(), r2.getCost()));
+        return rooms;
+    }
+    
+    public void bookRoom(Booking booking, String bookedBy) throws BookingErr {
+        List<Room> rooms = sortRoomsByCost();
 
         if (booking.getNumberOfGuests() <= 0) {
             throw new BookingErr("Number of guests must be greater than zero.");
@@ -26,12 +32,14 @@ public class BookingService {
         for (Room room : rooms) {
             if (!room.isOccupied() && room.getCapacity() >= booking.getNumberOfGuests()) {
                 room.setOccupation(true);
-                room.setGuestName(booking.getGuestName());
+                room.setGuestName(bookedBy);
                 roomRepo.save(room);
 
+                booking.setName(bookedBy);
                 booking.setTotalPrice(room.getCost());
                 booking.setRoomType(room.getType());
                 booking.setRoomId(room.getId());
+                bookingRepo.save(booking);
                 return;
             }
         }

@@ -26,7 +26,6 @@ public class Room {
 
     private boolean occupied = false;
 
-    @NotBlank(message = "Guest name cannot be empty")
     private String guestName;
 
     public Room() {}
